@@ -1101,21 +1101,24 @@ res_df %>%
 plot_auc <- res_df %>%
   group_by(model, alpha, region) %>%
   summarize(auc = mean(auc)) %>%
-  ggplot(aes(x = alpha, y = auc, color = model, group = model)) + geom_point() + geom_line() +
+  ggplot(aes(x = alpha, y = auc, color = model, group = model, linetype = model)) + 
+  geom_point(aes(shape=model)) + geom_line() +
   scale_color_brewer(palette = 'Dark2') + scale_x_continuous(breaks = seq(0,1,0.2)) + ylim(c(0.65,0.8)) +
   theme_bw() + theme(legend.position = 'top', legend.title = element_blank()) +
   facet_wrap(.~region)
 plot_time <- res_df %>%
   group_by(model, alpha, region) %>%
   summarize(time = mean(time)) %>%
-  ggplot(aes(x = alpha, y = time, color = model, group = model)) + geom_point() + geom_line() +
+  ggplot(aes(x = alpha, y = time, color = model, group = model, linetype = model)) +
+  geom_point(aes(shape=model)) + geom_line() +
   scale_color_brewer(palette = 'Dark2') + scale_x_continuous(breaks = seq(0,1,0.2)) +
   theme_bw() + theme(legend.position = 'top', legend.title = element_blank()) +
   ylab('Model estimation time in seconds') + facet_wrap(.~region)
 plot_sel <- res_df %>%
   group_by(model, alpha, region) %>%
   summarize(sel = mean(sel)) %>%
-  ggplot(aes(x = alpha, y = sel, color = model, group = model)) + geom_point() + geom_line() +
+  ggplot(aes(x = alpha, y = sel, color = model, group = model, linetype = model)) + 
+  geom_point(aes(shape=model)) + geom_line() +
   scale_color_brewer(palette = 'Dark2') + scale_x_continuous(breaks = seq(0,1,0.2)) +
   theme_bw() + theme(legend.position = 'top', legend.title = element_blank()) +
   ylab('Number of selected variables') + facet_wrap(.~region)
@@ -1123,7 +1126,8 @@ plot_sel_within <- res_df %>%
   group_by(model, alpha, region) %>%
   summarize(sel_within = mean(sel_within)) %>%
   ungroup() %>%
-  ggplot(aes(x = alpha, y = sel_within, color = model, group = model)) + geom_point() + geom_line() +
+  ggplot(aes(x = alpha, y = sel_within, color = model, group = model, linetype = model)) + 
+  geom_point(aes(shape=model)) + geom_line() +
   scale_color_brewer(palette = 'Dark2') + scale_x_continuous(breaks = seq(0,1,0.2)) +
   theme_bw() + theme(legend.position = 'top', legend.title = element_blank()) +
   ylab('Percentage selected variables within groups') + facet_wrap(.~region)
@@ -1131,7 +1135,8 @@ plot_sel_between_any <-  res_df %>%
   group_by(model, alpha, region) %>%
   summarize(sel_between_any = mean(sel_between_any)) %>%
   ungroup() %>%
-  ggplot(aes(x = alpha, y = sel_between_any, color = model, group = model)) + geom_point() + geom_line() +
+  ggplot(aes(x = alpha, y = sel_between_any, color = model, group = model, linetype = model)) + 
+  geom_point(aes(shape=model)) + geom_line() +
   scale_color_brewer(palette = 'Dark2') + scale_x_continuous(breaks = seq(0,1,0.2)) +
   theme_bw() + theme(legend.position = 'top', legend.title = element_blank()) +
   ylab('Number of partially selected groups') + facet_wrap(.~region)
@@ -1140,7 +1145,8 @@ plot_sel_between_all <-  res_df %>%
   group_by(model, alpha, region) %>%
   summarize(sel_between_all = mean(sel_between_all)) %>%
   ungroup() %>%
-  ggplot(aes(x = alpha, y = sel_between_all, color = model, group = model)) + geom_point() + geom_line() +
+  ggplot(aes(x = alpha, y = sel_between_all, color = model, group = model, linetype = model)) + 
+  geom_point(aes(shape=model)) + geom_line() +
   scale_color_brewer(palette = 'Dark2') + scale_x_continuous(breaks = seq(0,1,0.2)) +
   theme_bw() + theme(legend.position = 'top', legend.title = element_blank()) +
   ylab('Number of fully selected groups') + facet_wrap(.~region)

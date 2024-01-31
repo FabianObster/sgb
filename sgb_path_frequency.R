@@ -1,4 +1,4 @@
-set.seed(1111)
+set.seed(11)
 library(tidyverse)
 library(mboost)
 library(mvtnorm)
@@ -114,11 +114,12 @@ plotdata <- get_data(1,6) %>%
          cor = case_when(cor~ 'cor: 0.7', T ~'cor: 0')) 
 plotdata %>% 
   arrange(beta,iteration) %>%
-  ggplot(aes_string(x = 'V1', y = 'V2', color = 'alpha'))  + geom_line() +
+  ggplot(aes_string(x = 'V1', y = 'V2', color = 'alpha'))  + geom_line(aes(linewidth = alpha)) + 
   geom_point(aes(x=beta_1,y=beta_2), colour='red') + xlab('Estimate V1') + ylab('Estimate V2') +
-  facet_grid(cor~beta) + theme_bw(base_size = 14) + 
+  facet_grid(cor~beta) + theme_bw(base_size = 14) +
   scale_color_manual(values = c('#BB8FCE', '#2980B9', '#2ECC71','#CD6155','#909497')) +
-  scale_x_continuous(breaks=c(0,0.2,0.4,0.6,0.8,1.0), labels = c(0,0.2,0.4,0.6,0.8,1.0)) 
+  scale_x_continuous(breaks=c(0,0.2,0.4,0.6,0.8,1.0), labels = c(0,0.2,0.4,0.6,0.8,1.0)) +
+  scale_discrete_manual("linewidth", values = seq(1.4, 0.2, length.out = 5))
   ggsave('beta_paths.png', width = 7, height = 5, dpi = 600)
 
 
@@ -414,9 +415,9 @@ plotdata %>%
   mutate(dependence = factor(dependence, levels = c('orthogonal', 'independent','correlated: 0.7', 'correlated: 0.95')),
          regularization = factor(regularization, levels = c('df', 'lambda: 1', 'lambda: 10', 'lambda: 100'))
          ) %>%
-  ggplot(aes(x = alpha, y = prob, color = regularization, group = regularization)) + geom_point(size=0.2) +
+  ggplot(aes(x = alpha, y = prob, color = regularization, group = regularization, linetype = regularization)) + geom_point(size=0.2) +
   ylab('Relative frequency group selection') + scale_color_manual(values = c('#1b9e77', '#d95f02', '#e7298a', '#3440eb')) +
-  geom_line(linewidth=0.4) + theme_bw(base_size = 16) +
+  geom_line(linewidth=0.6) + theme_bw(base_size = 16) +
   theme(legend.position = 'top', legend.title = element_blank(),axis.text.x = element_text(size = 9),axis.text.y = element_text(size = 9)) + 
   facet_grid(group_size~dependence) 
 ggsave('within_group_selection.png', width = 12, height = 5, dpi = 600)

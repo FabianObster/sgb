@@ -201,7 +201,7 @@ plot_1 <- results_df %>%
   group_by(model, Alpha) %>%
   filter(mse_train == min(mse_train))%>%
   mutate(mse = mse/dim(test_df)[1]) %>%
-  ggplot(aes(x = Alpha, color = model, y = mse, group= interaction(model))) + 
+  ggplot(aes(x = Alpha, color = model, y = mse, group= interaction(model), linetype = model)) + 
   ylab('MSE') + theme_bw(base_size = 14)+ ylim(c(0.5,0.8)) + xlab('alpha') +
   geom_point() + geom_line() + scale_color_brewer(palette='Dark2') +
   scale_x_continuous(breaks = seq(0,1,0.2)) +
@@ -211,7 +211,7 @@ plot_2 <- results_df %>%
   group_by(model, alpha) %>%
   filter(mse_train == min(mse_train))%>%
   #filter(!(model == 'sgl' & lambda != lambda_opt) | is.na(lambda)) %>%
-  ggplot(aes(x = Alpha, color = model, y = sel, group= interaction(model))) + 
+  ggplot(aes(x = Alpha, color = model, y = sel, group= interaction(model)), linetype = model) + 
   ylab('Number of selected variables') + theme_bw(base_size = 14)+ ylim(c(0,60)) +
   xlab('alpha') + geom_point() + geom_line()  + scale_color_brewer(palette='Dark2')+
   scale_x_continuous(breaks = seq(0,1,0.2)) +
@@ -230,7 +230,7 @@ results_df %>%
 
 results_df %>%
   group_by(model, alpha) %>%
-  filter(mse_train == min(mse_train))%>%
+  filter(mse_train == min(mse_train)) %>%
   ggplot(aes(x = alpha, color = model, y = sel_between_all, group= interaction(model))) + 
   ylab('MSE') + theme_bw(base_size = 14)+ xlab('alpha') +
   geom_point() + geom_line()

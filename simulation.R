@@ -282,7 +282,8 @@ plot_rmse <- res_df %>%
            n_vars_full,n_vars_half,n,dependence, model, scenario) %>%
   summarize(mean_rmse = mean(rmse)) %>%
   ungroup() %>% 
-  ggplot(aes(x = alpha, y = mean_rmse, color = model, group = model)) + geom_point(size = 0.9) + geom_line() +
+  ggplot(aes(x = alpha, y = mean_rmse, color = model, group = model, linetype = model)) + 
+  geom_point(aes(shape=model),size = 1) + geom_line() +
   scale_color_brewer(palette = 'Dark2') + scale_x_continuous(breaks = seq(0,1,0.2)) +
   facet_wrap(~scenario) + theme_bw(base_size = 12) + theme(legend.position = 'top', legend.title = element_blank()) +
   ylab('Average standardized log RMSE')
@@ -295,7 +296,8 @@ plot_mstop <- res_df %>%
            n_vars_full,n_vars_half,n,dependence, model, scenario) %>%
   summarize(mstop = mean(Mstop)) %>%
   ungroup() %>% 
-  ggplot(aes(x = alpha, y = mstop, color = model, group = model)) + geom_point(size = 0.9) + geom_line() +
+  ggplot(aes(x = alpha, y = mstop, color = model, group = model, linetype = model)) + 
+  geom_point(aes(shape=model),size = 1) + geom_line() +
   scale_color_brewer(palette = 'Dark2') + scale_x_continuous(breaks = seq(0,1,0.2)) +
   facet_wrap(~scenario) + theme_bw(base_size = 12) + theme(legend.position = 'top', legend.title = element_blank()) +
   ylab('Average standardized log RMSE')
@@ -305,7 +307,8 @@ plot_effects <- res_df %>%
            n_vars_full,n_vars_half,n,dependence, model, scenario) %>%
   summarize(correct_effects_mean = mean(correct_effects)) %>%
   ungroup() %>%
-  ggplot(aes(x = alpha, y = correct_effects_mean, color = model, group = model)) + geom_point(size = 0.9) + geom_line() +
+  ggplot(aes(x = alpha, y = correct_effects_mean, color = model, group = model, linetype = model)) + 
+  geom_point(aes(shape=model),size = 1) + geom_line() +
   scale_color_brewer(palette = 'Dark2') + scale_x_continuous(breaks = seq(0,1,0.2)) + ylim(c(0,1)) +
   facet_wrap(~scenario) + theme_bw(base_size = 12) + theme(legend.position = 'top', legend.title = element_blank()) +
   ylab('Average proportion correct effects') 
@@ -315,7 +318,8 @@ plot_zeros <- res_df %>%
            n_vars_full,n_vars_half,n,dependence, model, scenario) %>%
   summarize(correct_zeros_mean = mean(correct_zeros)) %>%
   ungroup() %>%
-  ggplot(aes(x = alpha, y = correct_zeros_mean, color = model, group = model)) + geom_point(size = 0.9) + geom_line() +
+  ggplot(aes(x = alpha, y = correct_zeros_mean, color = model, group = model, linetype = model)) +
+  geom_point(aes(shape=model),size = 1) + geom_line() +
   scale_color_brewer(palette = 'Dark2') + scale_x_continuous(breaks = seq(0,1,0.2)) + ylim(c(0,1)) +
   facet_wrap(~scenario) + theme_bw(base_size = 12) + theme(legend.position = 'top', legend.title = element_blank()) +
   ylab('Average proportion correct zeros')
@@ -325,7 +329,8 @@ plot_classified <- res_df %>%
            n_vars_full,n_vars_half,n,dependence, model, scenario) %>%
   summarize(correct_classified_mean = mean(correct_classified)) %>%
   ungroup() %>%
-  ggplot(aes(x = alpha, y = correct_classified_mean, color = model, group = model)) + geom_point(size = 0.9) + geom_line() +
+  ggplot(aes(x = alpha, y = correct_classified_mean, color = model, group = model, linetype = model)) + 
+  geom_point(aes(shape=model),size = 1) + geom_line() +
   scale_color_brewer(palette = 'Dark2') + scale_x_continuous(breaks = seq(0,1,0.2)) + ylim(c(0,1)) +
   facet_wrap(~scenario) + theme_bw(base_size = 12) + theme(legend.position = 'top', legend.title = element_blank()) +
   ylab('Average proportion correct classified')
@@ -338,8 +343,8 @@ plot_sgb <- results_df %>%
          'correct zeros' = mean(correct_zeros),
          'correct classified' = mean(correct_classified)) %>%
   gather(value = 'Proportion', key = 'correct',-scenario,-alpha_sgb_df) %>%
-  ggplot(aes(x = alpha_sgb_df, y = Proportion, color = correct, linetype = correct)) + geom_point(size = 0.1) +
-  geom_smooth(span = 0.1,se = F, linewidth = 0.4, alpha = 2) + xlab('alpha sgb df') + ylim(c(0,1)) +
+  ggplot(aes(x = alpha_sgb_df, y = Proportion, color = correct, linetype = correct)) + geom_point(aes(shape = correct),size = 0.8) +
+  geom_smooth(span = 0.1,se = F, linewidth = 0.6, alpha = 2) + xlab('alpha sgb df') + ylim(c(0,1)) +
   scale_color_manual(values = c('#84bff3','#919776', '#e39cb2')) + scale_x_continuous(breaks = seq(0,1,0.2)) +
   facet_wrap(~scenario) + theme_bw(base_size = 12) +  theme(legend.position = 'top', legend.title = element_blank()) 
 

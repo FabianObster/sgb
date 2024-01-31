@@ -325,7 +325,8 @@ plot_rmse <- res_df %>%
            n_vars_full,n_vars_half,n,dependence, model, scenario) %>%
   summarize(mean_rmse = mean(rmse)) %>%
   ungroup() %>%
-  ggplot(aes(x = alpha, y = mean_rmse, color = model, group = model)) + geom_point(size = 0.9) + geom_line() +
+  ggplot(aes(x = alpha, y = mean_rmse, color = model, group = model, linetype = model)) +
+  geom_point(aes(shape=model)) + geom_line() +
   scale_color_brewer(palette = 'Dark2') + scale_x_continuous(breaks = seq(0,1,0.2)) +
   facet_wrap(~scenario) + theme_bw(base_size = 12) + theme(legend.position = 'top', legend.title = element_blank()) +
   ylab('Average standardized RMSE')
@@ -335,7 +336,8 @@ plot_time <- res_df %>%
            n_vars_full,n_vars_half,n,dependence, model, scenario) %>%
   summarize(time = mean((as.numeric(time)))) %>%
   ungroup() %>%
-  ggplot(aes(x = alpha, y = time, color = model, group = model)) + geom_point(size = 0.9) + geom_line() +
+  ggplot(aes(x = alpha, y = time, color = model, group = model, linetype = model)) + 
+  geom_point(aes(shape=model)) + geom_line() +
   scale_color_brewer(palette = 'Dark2') + scale_x_continuous(breaks = seq(0,1,0.2)) +# ylim(c(0,6)) +
   facet_wrap(~scenario) + theme_bw(base_size = 12) + theme(legend.position = 'top', legend.title = element_blank()) +
   ylab('time') 
@@ -345,7 +347,8 @@ plot_effects <- res_df %>%
            n_vars_full,n_vars_half,n,dependence, model, scenario) %>%
   summarize(correct_effects_mean = mean(correct_effects)) %>%
   ungroup() %>%
-  ggplot(aes(x = alpha, y = correct_effects_mean, color = model, group = model)) + geom_point(size = 0.9) + geom_line() +
+  ggplot(aes(x = alpha, y = correct_effects_mean, color = model, group = model, linetype = model)) + 
+  geom_point(aes(shape=model)) + geom_line() +
   scale_color_brewer(palette = 'Dark2') + scale_x_continuous(breaks = seq(0,1,0.2)) + ylim(c(0,1)) +
   facet_wrap(~scenario) + theme_bw(base_size = 12) + theme(legend.position = 'top', legend.title = element_blank()) +
   ylab('Average proportion correct effects') 
@@ -355,7 +358,8 @@ plot_zeros <- res_df %>%
            n_vars_full,n_vars_half,n,dependence, model, scenario) %>%
   summarize(correct_zeros_mean = mean(correct_zeros)) %>%
   ungroup() %>%
-  ggplot(aes(x = alpha, y = correct_zeros_mean, color = model, group = model)) + geom_point(size = 0.9) + geom_line() +
+  ggplot(aes(x = alpha, y = correct_zeros_mean, color = model, group = model, linetype = model)) + 
+  geom_point(aes(shape=model)) + geom_line() +
   scale_color_brewer(palette = 'Dark2') + scale_x_continuous(breaks = seq(0,1,0.2)) + ylim(c(0,1)) +
   facet_wrap(~scenario) + theme_bw(base_size = 12) + theme(legend.position = 'top', legend.title = element_blank()) +
   ylab('Average proportion correct zeros')
@@ -365,7 +369,8 @@ plot_classified <- res_df %>%
            n_vars_full,n_vars_half,n,dependence, model, scenario) %>%
   summarize(correct_classified_mean = mean(correct_classified)) %>%
   ungroup() %>%
-  ggplot(aes(x = alpha, y = correct_classified_mean, color = model, group = model)) + geom_point(size = 0.9) + geom_line() +
+  ggplot(aes(x = alpha, y = correct_classified_mean, color = model, group = model, linetype = model)) +
+  geom_point(aes(shape=model)) + geom_line() +
   scale_color_brewer(palette = 'Dark2') + scale_x_continuous(breaks = seq(0,1,0.2)) + ylim(c(0,1)) +
   facet_wrap(~scenario) + theme_bw(base_size = 12) + theme(legend.position = 'top', legend.title = element_blank()) +
   ylab('Average proportion correct classified')
@@ -396,5 +401,3 @@ res_df %>%
             sd_correct_effects = sd(correct_effects),
             min_mse = min(mse), max_correct_classified = max(correct_classified)) %>%
   writexl::write_xlsx('simulation_figures_tables/sim_results_sgl.xlsx')
-
-  
